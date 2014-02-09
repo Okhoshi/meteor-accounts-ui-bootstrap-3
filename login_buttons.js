@@ -8,21 +8,14 @@
     Handlebars.registerHelper(
         "loginButtons",
         function(options) {
-            if (options.hash.align === "left")
-                return new Handlebars.SafeString(Template._loginButtons({
-                    align: "left"
-                }));
-            else
-                return new Handlebars.SafeString(Template._loginButtons({
-                    align: "right"
-                }));
-        });
+                return new Handlebars.SafeString(Template._loginButtons());
+    });
 
-    // shared between dropdown and single mode
+    // shared between modal and single mode
     Template._loginButtons.events({
         'click #login-buttons-logout': function() {
             Meteor.logout(function() {
-                loginButtonsSession.closeDropdown();
+                loginButtonsSession.closeModal();
             });
         }
     });
@@ -35,8 +28,8 @@
     // loginButtonLoggedOut template
     //
 
-    Template._loginButtonsLoggedOut.dropdown = function() {
-        return Accounts._loginButtons.dropdown();
+    Template._loginButtonsLoggedOut.modal = function() {
+        return Accounts._loginButtons.modal();
     };
 
     Template._loginButtonsLoggedOut.services = function() {
@@ -60,10 +53,10 @@
     // loginButtonsLoggedIn template
     //
 
-    // decide whether we should show a dropdown rather than a row of
+    // decide whether we should show a modal rather than a row of
     // buttons
-    Template._loginButtonsLoggedIn.dropdown = function() {
-        return Accounts._loginButtons.dropdown();
+    Template._loginButtonsLoggedIn.modal = function() {
+        return Accounts._loginButtons.modal();
     };
 
     Template._loginButtonsLoggedIn.displayName = function() {
@@ -88,8 +81,8 @@
     // loginButtonsLoggingInPadding template
     //
 
-    Template._loginButtonsLoggingInPadding.dropdown = function() {
-        return Accounts._loginButtons.dropdown();
+    Template._loginButtonsLoggingInPadding.modal = function() {
+        return Accounts._loginButtons.modal();
     };
 
     //
@@ -135,7 +128,7 @@
         return !!Package['accounts-password'];
     };
 
-    Accounts._loginButtons.dropdown = function() {
+    Accounts._loginButtons.modal = function() {
         return this.hasPasswordService() || getLoginServices().length > 1;
     };
 

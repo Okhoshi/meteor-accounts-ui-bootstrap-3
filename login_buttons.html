@@ -5,14 +5,14 @@
   -->
 
 <template name="_loginButtons">
-  <div id="login-buttons" class="login-buttons-dropdown-align-{{align}}"></div>
+  <div id="login-buttons" class="login-buttons-modal"></div>
   {{#if currentUser}}
     {{#if loggingIn}}
       {{! We aren't actually logged in yet; we're just setting Meteor.userId
           optimistically during an at-startup login-with-token. We expose this
           state so other UIs can treat it specially, but we'll just treat it
           as logged out. }}
-      {{#if dropdown}}
+      {{#if modal}}
         {{> _loginButtonsLoggingIn }}
       {{else}}
         <div class="login-buttons-with-only-one-button">
@@ -28,8 +28,8 @@
 </template>
 
 <template name="_loginButtonsLoggedIn">
-  {{#if dropdown}}
-    {{> _loginButtonsLoggedInDropdown}}
+  {{#if modal}}
+    {{> _loginButtonsLoggedInModal}}
   {{else}}
     <div class="login-buttons-with-only-one-button">
       {{> _loginButtonsLoggedInSingleLogoutButton}}
@@ -40,8 +40,8 @@
 <template name="_loginButtonsLoggedOut">
   {{#if services}} {{! if at least one service is configured }}
     {{#if configurationLoaded}}
-      {{#if dropdown}} {{! if more than one service configured, or password is configured}}
-        {{> _loginButtonsLoggedOutDropdown}}
+      {{#if modal}} {{! if more than one service configured, or password is configured}}
+        {{> _loginButtonsLoggedOutModal}}
       {{else}}
         {{#with singleService}} {{! at this point there must be only one configured services }}
           <div class="login-buttons-with-only-one-button">
@@ -76,7 +76,7 @@
 </template>
 
 <template name="_loginButtonsLoggingInPadding">
-  {{#unless dropdown}}
+  {{#unless modal}}
     {{! invisible div used for correct height of surrounding div. this ensures
         that the _loginButtons template is always the same height
         and the rest of the page doesn't move up and down }}

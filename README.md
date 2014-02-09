@@ -55,22 +55,22 @@ Example:
 Add additional logged in actions
 --------------------------------
 
-You can add additional markup to the logged in dropdown, e.g. to edit
+You can add additional markup to the logged in modal, e.g. to edit
 the user's account or profile, by defining a 
-`_loginButtonsAdditionalLoggedInDropdownActions` template and specifying
+`_loginButtonsAdditionalLoggedInModalActions` template and specifying
 the corresponding events.
 
 ```html
-<template name="_loginButtonsAdditionalLoggedInDropdownActions">
+<template name="_loginButtonsAdditionalLoggedInModalActions">
   <button class="btn btn-default btn-block" id="login-buttons-edit-profile">Edit profile</button>
 </template>
 ```
 
 ```javascript
-Template._loginButtonsLoggedInDropdown.events({
+Template._loginButtonsLoggedInModal.events({
   'click #login-buttons-edit-profile': function(event) {
     event.stopPropagation();
-    Template._loginButtons.toggleDropdown();
+    Template._loginButtons.toggleModal();
     Router.go('profileEdit');
   }
 });

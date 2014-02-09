@@ -8,7 +8,7 @@
       loginButtonsSession.resetMessages();
       var callback = function (err) {
         if (!err) {
-          loginButtonsSession.closeDropdown();
+          loginButtonsSession.closeModal();
         } else if (err instanceof Accounts.LoginCancelledError) {
           // do nothing
         } else if (err instanceof Accounts.ConfigError) {

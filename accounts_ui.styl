@@ -1,15 +1,16 @@
-#login-dropdown-list
-	.dropdown-menu
+#login-modal-list
+	.modal-menu
 		width:	300px;
 		padding: 15px;
 
-#login-dropdown-list
+#login-modal-list
 	#forgot-password-link
 	#signup-link
-		margin-top:10px;
+		margin-top:0px;
 
 	.btn
 		margin-top: 5px;
+		float: none;
 
 	input
 		margin:0px
@@ -32,23 +33,16 @@
 	.modal-content
 		margin-top: 30%;
 
-.login-buttons-dropdown-align-left
+.login-buttons-modal
 	&#login-buttons + li
-		.dropdown-menu
-			float: left;
+		.modal-menu
 			left: 0;
 			right: auto;
-.login-buttons-dropdown-align-right
-	&#login-buttons + li
-		.dropdown-menu
-			float: right;
-			right: 0;
-			left: auto;
 
 #login-buttons
 	display: none;
 
-#login-dropdown-list a
+#login-modal-list a
 	cursor: pointer;
 
 #configure-login-service-dialog-modal

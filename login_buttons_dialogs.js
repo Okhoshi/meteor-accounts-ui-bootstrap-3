@@ -160,7 +160,7 @@
 
   Template._loginButtonsMessagesDialog.visible = function () {
     var hasMessage = loginButtonsSession.get('infoMessage') || loginButtonsSession.get('errorMessage');
-    return !Accounts._loginButtons.dropdown() && hasMessage;
+    return !Accounts._loginButtons.modal() && hasMessage;
   };
 
 

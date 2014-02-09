@@ -1,51 +1,56 @@
 <!--           -->
 <!-- LOGGED IN -->
 <!--           -->
-<template name="_loginButtonsLoggedInDropdown">
-  <li id="login-dropdown-list" class="dropdown">
-    <a class="dropdown-toggle"  data-toggle="dropdown">
-      {{displayName}}
-      <b class="caret"></b>
-    </a>
-    <div class="dropdown-menu col-sm-3">
-      {{#if inMessageOnlyFlow}}
-        {{> _loginButtonsMessages}}
-      {{else}}
-        {{#if inChangePasswordFlow}}
-          {{> _loginButtonsChangePassword}}
-        {{else}}
-          {{> _loginButtonsLoggedInDropdownActions}}
-        {{/if}}
-      {{/if}}
-    </div>
-  </li>
+<template name="_loginButtonsLoggedInModal">
+    <li id="login-modal-list">
+        <a data-toggle="modal" data-target=".login-modal">
+            {{displayName}}
+        </a>
+        <div class="modal fade login-modal" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        {{#if inMessageOnlyFlow}}
+                        {{> _loginButtonsMessages}}
+                        {{else}}
+                        {{#if inChangePasswordFlow}}
+                        {{> _loginButtonsChangePassword}}
+                        {{else}}
+                        {{> _loginButtonsLoggedInModalActions}}
+                        {{/if}}
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
 </template>
 
-<template name="_loginButtonsLoggedInDropdownActions">
-  {{#if additionalLoggedInDropdownActions}}
-    {{> _loginButtonsAdditionalLoggedInDropdownActions}}
-  {{/if}}
-
-  {{#if allowChangingPassword}}
+<template name="_loginButtonsLoggedInModalActions">
+    {{#if allowChangingPassword}}
     <button class="btn btn-default btn-block" id="login-buttons-open-change-password">Change password</button>
-  {{/if}}
-
-  <button class="btn btn-block btn-primary" id="login-buttons-logout">Sign out</button>
+    {{/if}}
+    <button class="btn btn-block btn-primary" id="login-buttons-logout">Sign out</button>
 </template>
 
 <!--            -->
 <!-- LOGGED OUT -->
 <!--            -->
-<template name="_loginButtonsLoggedOutDropdown">
-  <li id="login-dropdown-list" class="dropdown">
-    <a class="dropdown-toggle"  data-toggle="dropdown">
-      Sign In{{#unless forbidClientAccountCreation}} / Up{{/unless}}
-      <b class="caret"></b>
-    </a>
-    <div class="dropdown-menu">
-      {{> _loginButtonsLoggedOutAllServices}}
-    </div>
-  </li>
+<template name="_loginButtonsLoggedOutModal">
+    <li id="login-modal-list">
+        <a data-toggle="modal" data-target=".login-modal">
+            Sign In{{#unless forbidClientAccountCreation}} / Up{{/unless}}
+        </a>
+        <div class="modal fade login-modal" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        {{> _loginButtonsLoggedOutAllServices}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
 </template>
 
 <template name="_loginButtonsLoggedOutAllServices">
@@ -90,7 +95,7 @@
     {{#if inLoginFlow}}
       <div id="login-other-options">
       {{#if showForgotPasswordLink}}
-        <a id="forgot-password-link" class="pull-left" >Forgot password?</a>
+        <a id="forgot-password-link" >Forgot password?</a>
       {{/if}}
       {{#if showCreateAccountLink}}
         <a id="signup-link" class="pull-right" >Create account</a>
@@ -129,6 +134,6 @@
   {{#each fields}}
     {{> _loginButtonsFormField}}
   {{/each}}
-  <button class="btn btn-primary" id="login-buttons-do-change-password">Change password</button>
-  <button class="btn btn-default login-close">Close</button>
+  <button class="btn btn-primary" id="login-buttons-do-change-password" >Change password</button>
+  <button class="btn btn-default login-close" >Close</button>
 </template>

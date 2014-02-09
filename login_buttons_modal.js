@@ -3,57 +3,58 @@
     // for convenience
     var loginButtonsSession = Accounts._loginButtonsSession;
 
-    // events shared between loginButtonsLoggedOutDropdown and
-    // loginButtonsLoggedInDropdown
+    // events shared between loginButtonsLoggedOutModal and
+    // loginButtonsLoggedInModal
     Template._loginButtons.events({
-        'click input, click label, click button, click .dropdown-menu, click .alert': function(event) {
+        'click input, click label, click button, click .modal-menu, click .alert': function(event) {
             event.stopPropagation();
         },
         'click #login-name-link, click #login-sign-in-link': function() {
             event.stopPropagation();
-            loginButtonsSession.set('dropdownVisible', true);
+            loginButtonsSession.set('modalVisible', true);
             Meteor.flush();
         },
         'click .login-close': function() {
-            loginButtonsSession.closeDropdown();
+            loginButtonsSession.closeModal();
         }
     });
 
-    Template._loginButtons.toggleDropdown = function() {
-      toggleDropdown();
+    Template._loginButtons.toggleModal = function() {
+      toggleModal();
     };
 
     //
-    // loginButtonsLoggedInDropdown template and related
+    // loginButtonsLoggedInModal template and related
     //
 
-    Template._loginButtonsLoggedInDropdown.events({
+    Template._loginButtonsLoggedInModal.events({
         'click #login-buttons-open-change-password': function(event) {
             event.stopPropagation();
+            $('#login-modal-list .login-modal').modal('hide');
             loginButtonsSession.resetMessages();
             loginButtonsSession.set('inChangePasswordFlow', true);
             Meteor.flush();
-            toggleDropdown();
+            $('#login-modal-list .login-modal').modal('show');
         }
     });
 
-    Template._loginButtonsLoggedInDropdown.displayName = function() {
+    Template._loginButtonsLoggedInModal.displayName = function() {
         return Accounts._loginButtons.displayName();
     };
 
-    Template._loginButtonsLoggedInDropdown.inChangePasswordFlow = function() {
+    Template._loginButtonsLoggedInModal.inChangePasswordFlow = function() {
         return loginButtonsSession.get('inChangePasswordFlow');
     };
 
-    Template._loginButtonsLoggedInDropdown.inMessageOnlyFlow = function() {
+    Template._loginButtonsLoggedInModal.inMessageOnlyFlow = function() {
         return loginButtonsSession.get('inMessageOnlyFlow');
     };
 
-    Template._loginButtonsLoggedInDropdown.dropdownVisible = function() {
-        return loginButtonsSession.get('dropdownVisible');
+    Template._loginButtonsLoggedInModal.modalVisible = function() {
+        return loginButtonsSession.get('modalVisible');
     };
 
-    Template._loginButtonsLoggedInDropdownActions.allowChangingPassword = function() {
+    Template._loginButtonsLoggedInModalActions.allowChangingPassword = function() {
         // it would be more correct to check whether the user has a password set,
         // but in order to do that we'd have to send more data down to the client,
         // and it'd be preferable not to send down the entire service.password document.
@@ -64,15 +65,15 @@
     };
 
 
-    Template._loginButtonsLoggedInDropdownActions.additionalLoggedInDropdownActions = function () {
-      return Template._loginButtonsAdditionalLoggedInDropdownActions !== undefined;
+    Template._loginButtonsLoggedInModalActions.additionalLoggedInModalActions = function () {
+      return Template._loginButtonsAdditionalLoggedInModalActions !== undefined;
     };
 
     //
-    // loginButtonsLoggedOutDropdown template and related
+    // loginButtonsLoggedOutModal template and related
     //
 
-    Template._loginButtonsLoggedOutDropdown.events({
+    Template._loginButtonsLoggedOutModal.events({
         'click #login-buttons-password': function() {
             loginOrSignup();
         },
@@ -128,7 +129,7 @@
 
             // force the ui to update so that we have the approprate fields to fill in
             Meteor.flush();
-            //toggleDropdown();
+            //toggleModal();
 
             // update new fields with appropriate defaults
             if (email !== null)
@@ -163,8 +164,8 @@
         }
     });
 
-    // additional classes that can be helpful in styling the dropdown
-    Template._loginButtonsLoggedOutDropdown.additionalClasses = function() {
+    // additional classes that can be helpful in styling the modal
+    Template._loginButtonsLoggedOutModal.additionalClasses = function() {
         if (!Accounts.password) {
             return false;
         } else {
@@ -178,15 +179,15 @@
         }
     };
 
-    Template._loginButtonsLoggedOutDropdown.dropdownVisible = function() {
-        return loginButtonsSession.get('dropdownVisible');
+    Template._loginButtonsLoggedOutModal.modalVisible = function() {
+        return loginButtonsSession.get('modalVisible');
     };
 
-    Template._loginButtonsLoggedOutDropdown.hasPasswordService = function() {
+    Template._loginButtonsLoggedOutModal.hasPasswordService = function() {
         return Accounts._loginButtons.hasPasswordService();
     };
 
-    Template._loginButtonsLoggedOutDropdown.forbidClientAccountCreation = function() {
+    Template._loginButtonsLoggedOutModal.forbidClientAccountCreation = function() {
         return Accounts._options.forbidClientAccountCreation;
     };
 
@@ -426,13 +427,13 @@
             if (error) {
                 loginButtonsSession.errorMessage(error.reason || "Unknown error");
             } else {
-                loginButtonsSession.closeDropdown();
+                loginButtonsSession.closeModal();
             }
         });
     };
 
-    var toggleDropdown = function() {
-        $('#login-dropdown-list .dropdown-menu').dropdown('toggle');
+    var toggleModal = function() {
+        $('#login-modal-list .login-modal').modal('toggle');
     };
 
     var signup = function() {
@@ -497,7 +498,7 @@
             if (error) {
                 loginButtonsSession.errorMessage(error.reason || "Unknown error");
             } else {
-                loginButtonsSession.closeDropdown();
+                loginButtonsSession.closeModal();
             }
         });
     };
@@ -521,6 +522,7 @@
     };
 
     var changePassword = function() {
+        loginButtonsSession.closeModal();
         loginButtonsSession.resetMessages();
 
         // notably not trimmed. a password could (?) start or end with a space

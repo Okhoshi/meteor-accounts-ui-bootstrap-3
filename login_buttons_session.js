@@ -1,6 +1,6 @@
 (function () {
   var VALID_KEYS = [
-    'dropdownVisible',
+    'modalVisible',
 
     // XXX consider replacing these with one key that has an enum for values.
     'inSignupFlow',
@@ -47,12 +47,13 @@
       return Session.get(KEY_PREFIX + key);
     },
 
-    closeDropdown: function () {
+    closeModal: function () {
+      $('#login-modal-list .login-modal').modal('hide');
       this.set('inSignupFlow', false);
       this.set('inForgotPasswordFlow', false);
       this.set('inChangePasswordFlow', false);
       this.set('inMessageOnlyFlow', false);
-      this.set('dropdownVisible', false);
+      this.set('modalVisible', false);
       this.resetMessages();
     },
 
@@ -77,15 +78,15 @@
 
     // ensure that somethings displaying a message (info or error) is
     // visible.  if a dialog with messages is open, do nothing;
-    // otherwise open the dropdown.
+    // otherwise open the modal.
     //
     // notably this doesn't matter when only displaying a single login
     // button since then we have an explicit message dialog
-    // (_loginButtonsMessageDialog), and dropdownVisible is ignored in
+    // (_loginButtonsMessageDialog), and modalVisible is ignored in
     // this case.
     ensureMessageVisible: function () {
       if (!this.isMessageDialogVisible())
-        this.set("dropdownVisible", true);
+        this.set("modalVisible", true);
     },
 
     resetMessages: function () {
