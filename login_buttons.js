@@ -2,6 +2,9 @@
     if (!Accounts._loginButtons)
         Accounts._loginButtons = {};
 
+    if (!Accounts._loginModals)
+        Accounts._loginModals = {};
+
     // for convenience
     var loginButtonsSession = Accounts._loginButtonsSession;
 
@@ -11,8 +14,14 @@
                 return new Handlebars.SafeString(Template._loginButtons());
     });
 
+    Handlebars.registerHelper(
+        "loginModals",
+        function(options) {
+                return new Handlebars.SafeString(Template._loginModals());
+    });
+
     // shared between modal and single mode
-    Template._loginButtons.events({
+    Template._loginModals.events({
         'click #login-buttons-logout': function() {
             Meteor.logout(function() {
                 loginButtonsSession.closeModal();
@@ -21,6 +30,10 @@
     });
 
     Template._loginButtons.preserve({
+        'input[id]': Spark._labelFromIdOrName
+    });
+
+    Template._loginModals.preserve({
         'input[id]': Spark._labelFromIdOrName
     });
 

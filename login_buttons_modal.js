@@ -13,7 +13,10 @@
             event.stopPropagation();
             loginButtonsSession.set('modalVisible', true);
             Meteor.flush();
-        },
+        }
+    });
+
+    Template._loginModals.events({
         'click .login-close': function() {
             loginButtonsSession.closeModal();
         }
@@ -27,14 +30,15 @@
     // loginButtonsLoggedInModal template and related
     //
 
-    Template._loginButtonsLoggedInModal.events({
+    Template._loginModalsLoggedInModal.events({
         'click #login-buttons-open-change-password': function(event) {
             event.stopPropagation();
-            $('#login-modal-list .login-modal').modal('hide');
+            console.log($('#login-modal-list'))
+            $('#login-modal-list').modal('hide');
             loginButtonsSession.resetMessages();
             loginButtonsSession.set('inChangePasswordFlow', true);
             Meteor.flush();
-            $('#login-modal-list .login-modal').modal('show');
+            $('#login-modal-list').modal('show');
         }
     });
 
@@ -42,15 +46,15 @@
         return Accounts._loginButtons.displayName();
     };
 
-    Template._loginButtonsLoggedInModal.inChangePasswordFlow = function() {
+    Template._loginModalsLoggedInModal.inChangePasswordFlow = function() {
         return loginButtonsSession.get('inChangePasswordFlow');
     };
 
-    Template._loginButtonsLoggedInModal.inMessageOnlyFlow = function() {
+    Template._loginModalsLoggedInModal.inMessageOnlyFlow = function() {
         return loginButtonsSession.get('inMessageOnlyFlow');
     };
 
-    Template._loginButtonsLoggedInModal.modalVisible = function() {
+    Template._loginModalsLoggedInModal.modalVisible = function() {
         return loginButtonsSession.get('modalVisible');
     };
 
@@ -73,7 +77,7 @@
     // loginButtonsLoggedOutModal template and related
     //
 
-    Template._loginButtonsLoggedOutModal.events({
+    Template._loginModalsLoggedOutModal.events({
         'click #login-buttons-password': function() {
             loginOrSignup();
         },
@@ -165,7 +169,7 @@
     });
 
     // additional classes that can be helpful in styling the modal
-    Template._loginButtonsLoggedOutModal.additionalClasses = function() {
+    Template._loginModalsLoggedOutModal.additionalClasses = function() {
         if (!Accounts.password) {
             return false;
         } else {
@@ -179,11 +183,11 @@
         }
     };
 
-    Template._loginButtonsLoggedOutModal.modalVisible = function() {
+    Template._loginModalsLoggedOutModal.modalVisible = function() {
         return loginButtonsSession.get('modalVisible');
     };
 
-    Template._loginButtonsLoggedOutModal.hasPasswordService = function() {
+    Template._loginModalsLoggedOutModal.hasPasswordService = function() {
         return Accounts._loginButtons.hasPasswordService();
     };
 
@@ -433,7 +437,7 @@
     };
 
     var toggleModal = function() {
-        $('#login-modal-list .login-modal').modal('toggle');
+        $('#login-modal-list').modal('toggle');
     };
 
     var signup = function() {

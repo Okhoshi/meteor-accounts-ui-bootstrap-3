@@ -48,7 +48,7 @@
     },
 
     closeModal: function () {
-      $('#login-modal-list .login-modal').modal('hide');
+      $('#login-modal-list').modal('hide');
       this.set('inSignupFlow', false);
       this.set('inForgotPasswordFlow', false);
       this.set('inChangePasswordFlow', false);
